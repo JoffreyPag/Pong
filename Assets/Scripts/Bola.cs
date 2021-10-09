@@ -14,7 +14,8 @@ public class Bola : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mVelocidade.x = -velocidade;
+        mVelocidade.x = Direction()*velocidade;
+        mVelocidade.y = Direction()*velocidade;
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = mVelocidade;
     }
@@ -23,5 +24,10 @@ public class Bola : MonoBehaviour
     void Update()
     {
         
+    }
+
+    int Direction() {
+        int[] integers = new int[] { -1, 1 };
+        return integers[Random.Range(0, integers.Length)];
     }
 }

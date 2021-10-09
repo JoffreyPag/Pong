@@ -6,7 +6,8 @@ public class Raquete : MonoBehaviour
 {
 
     public Vector3 raquetepos;
-    public float meuY, velocidade = 5f, limiteMax, limiteMin;
+    public float meuY, velocidade = 5f, limiteMax;
+    public bool player1;
 
     void Start()
     {
@@ -19,18 +20,42 @@ public class Raquete : MonoBehaviour
         raquetepos.y = meuY;
         //Alterando a posicao da raquete
         transform.position = raquetepos;
-    
-        if (Input.GetKey(KeyCode.UpArrow) && meuY < limiteMax)
+
+        float veldelta = velocidade * Time.deltaTime;
+
+        if (player1)
         {
-            meuY += (velocidade * Time.deltaTime);
-        }
+            if (Input.GetKey(KeyCode.W))
+            {
+                meuY += veldelta;
+            }
 
 
-        if (Input.GetKey(KeyCode.DownArrow) && meuY > limiteMin)
-        {
-            meuY -= (velocidade * Time.deltaTime);
+            if (Input.GetKey(KeyCode.S))
+            {
+                meuY -= veldelta;
+            }
         }
-        
+        else {
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                meuY += veldelta;
+            }
+
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                meuY -= veldelta;
+            }
+        }
+
+        if (meuY > limiteMax) {
+            meuY = limiteMax;
+        }
+        if(meuY < -limiteMax)
+        {
+            meuY = -limiteMax;
+        }
         
     }
 }
