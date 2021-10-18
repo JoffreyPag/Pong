@@ -8,6 +8,9 @@ public class Raquete : MonoBehaviour
     public Vector3 raquetepos;
     public float meuY, velocidade = 5f, limiteMax;
     public bool player1;
+    public bool automatico = false;
+
+    public Transform transformBola;
 
     void Start()
     {
@@ -23,39 +26,51 @@ public class Raquete : MonoBehaviour
 
         float veldelta = velocidade * Time.deltaTime;
 
-        if (player1)
+        if (!automatico)
         {
-            if (Input.GetKey(KeyCode.W))
+
+            if (player1)
             {
-                meuY += veldelta;
-            }
+                if (Input.GetKey(KeyCode.W))
+                {
+                    meuY += veldelta;
+                }
 
 
-            if (Input.GetKey(KeyCode.S))
-            {
-                meuY -= veldelta;
+                if (Input.GetKey(KeyCode.S))
+                {
+                    meuY -= veldelta;
+                }
+                
             }
+            else
+            {
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    meuY += veldelta;
+                }
+
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    meuY -= veldelta;
+                }
+
+                if (Input.GetKey(KeyCode.Return)) automatico = true;
+            }
+
         }
         else {
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                meuY += veldelta;
-            }
-
-
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                meuY -= veldelta;
-            }
+            meuY = Mathf.Lerp(meuY, transformBola.position.y, 0.01f);
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.UpArrow)) automatico = false;
         }
 
-        if (meuY > limiteMax) {
+        if (meuY > limiteMax)
+        {
             meuY = limiteMax;
         }
-        if(meuY < -limiteMax)
+        if (meuY < -limiteMax)
         {
             meuY = -limiteMax;
         }
-        
     }
 }
